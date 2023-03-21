@@ -1,5 +1,6 @@
 //jshint esversion:6
 
+require('dotenv');
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
@@ -17,7 +18,10 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
-mongoose.connect('mongodb://127.0.0.1:27017/blogDB').then(console.log("Connected to DB!")).catch(err => console.log(err));
+const username = process.env.DB_USERNAME;
+const password = process.env.DB_PASSWORD;
+
+mongoose.connect('mongodb+srv://' + username + ":" + password + '@cluster0.eq2sewl.mongodb.net/blogDB').then(console.log("Connected to DB!")).catch(err => console.log(err));
 
 const postSchema = new mongoose.Schema({
   title: String,
